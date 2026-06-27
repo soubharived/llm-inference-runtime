@@ -1,0 +1,27 @@
+# Build files
+build/
+*.o
+*.a
+*.so
+
+# Model files (too large for GitHub)
+models/
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# llama.cpp (cloned separately)
+llama.cpp/
+
+# Results (optional - comment out if you want graphs on GitHub)
+# results/
+
+# VSCode
+.vscode/
+
+# Temp files
+*.tmp
+*.log

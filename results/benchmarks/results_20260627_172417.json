@@ -1,0 +1,110 @@
+[
+  {
+    "n_users": 1,
+    "total_time_s": 136.76,
+    "success_count": 1,
+    "fail_count": 0,
+    "throughput_rps": 0.0073,
+    "latency_mean_ms": 136756.0,
+    "latency_p50_ms": 136756.0,
+    "latency_p95_ms": 136756.0,
+    "latency_p99_ms": 136756.0,
+    "latency_min_ms": 136756.0,
+    "latency_max_ms": 136756.0,
+    "avg_tokens": 24,
+    "total_tokens": 24,
+    "tokens_per_sec": 0.18,
+    "raw_results": [
+      {
+        "user_id": 1,
+        "request_id": 1,
+        "success": true,
+        "latency_ms": 136755.97262382507,
+        "tokens_generated": 24,
+        "runtime_latency": 135909,
+        "prompt_len": 41
+      }
+    ]
+  },
+  {
+    "n_users": 2,
+    "total_time_s": 48.02,
+    "success_count": 2,
+    "fail_count": 0,
+    "throughput_rps": 0.0417,
+    "latency_mean_ms": 42220.9,
+    "latency_p50_ms": 42220.9,
+    "latency_p95_ms": 47437.0,
+    "latency_p99_ms": 47900.6,
+    "latency_min_ms": 36425.2,
+    "latency_max_ms": 48016.5,
+    "avg_tokens": 150.5,
+    "total_tokens": 301,
+    "tokens_per_sec": 6.27,
+    "raw_results": [
+      {
+        "user_id": 1,
+        "request_id": 2,
+        "success": true,
+        "latency_ms": 36425.20189285278,
+        "tokens_generated": 256,
+        "runtime_latency": 35405.3,
+        "prompt_len": 41
+      },
+      {
+        "user_id": 2,
+        "request_id": 3,
+        "success": true,
+        "latency_ms": 48016.528367996216,
+        "tokens_generated": 45,
+        "runtime_latency": 11777.8,
+        "prompt_len": 41
+      }
+    ]
+  },
+  {
+    "n_users": 3,
+    "total_time_s": 69.61,
+    "success_count": 3,
+    "fail_count": 0,
+    "throughput_rps": 0.0431,
+    "latency_mean_ms": 62466.8,
+    "latency_p50_ms": 69542.5,
+    "latency_p95_ms": 69606.6,
+    "latency_p99_ms": 69612.3,
+    "latency_min_ms": 48244.2,
+    "latency_max_ms": 69613.8,
+    "avg_tokens": 122.3,
+    "total_tokens": 367,
+    "tokens_per_sec": 5.27,
+    "raw_results": [
+      {
+        "user_id": 1,
+        "request_id": 4,
+        "success": true,
+        "latency_ms": 48244.23098564148,
+        "tokens_generated": 256,
+        "runtime_latency": 47303.4,
+        "prompt_len": 41
+      },
+      {
+        "user_id": 3,
+        "request_id": 6,
+        "success": true,
+        "latency_ms": 69542.50478744507,
+        "tokens_generated": 66,
+        "runtime_latency": 7753.72,
+        "prompt_len": 41
+      },
+      {
+        "user_id": 2,
+        "request_id": 5,
+        "success": true,
+        "latency_ms": 69613.76285552979,
+        "tokens_generated": 45,
+        "runtime_latency": 13496.2,
+        "prompt_len": 41
+      }
+    ]
+  }
+]
