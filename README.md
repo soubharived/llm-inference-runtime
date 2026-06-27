@@ -287,7 +287,7 @@ Shows real-time:
 
 ## Author
 
-**Soubhari Ved**
+**Ved Parkash**
 M.Tech — Artificial Intelligence
 IIT Patna
 
