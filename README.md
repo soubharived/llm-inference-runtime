@@ -2,7 +2,7 @@
 
 A production-grade LLM inference serving system built from scratch in **C++17**, implementing core concepts from modern inference engines like vLLM, TensorRT-LLM, and Triton Inference Server.
 
-![Benchmark Results](results/graphs/benchmark_20260627_172417.png)
+![GPU Benchmark Results](results/graphs/benchmark_20260628_211308.png)
 
 ---
 
@@ -26,19 +26,54 @@ C++ Inference Runtime
 └─────────────────────────────────┘
       ↓
 llama.cpp → Qwen2.5-1.5B-Instruct
+      ↓
+NVIDIA Tesla T4 GPU
+```
+
+---
+
+## Key Results
+
+### GPU Benchmark (Tesla T4)
+
+| Users | Throughput | P95 Latency | Tokens/sec | Success |
+|-------|-----------|-------------|------------|---------|
+| 1     | 0.40 rps  | 2515ms      | 102        | 1/1 ✅  |
+| 5     | 0.62 rps  | 8051ms      | 139        | 5/5 ✅  |
+| 10    | 0.90 rps  | 10400ms     | 147        | 10/10 ✅|
+| 20    | 0.76 rps  | 26243ms     | 151        | 20/20 ✅|
+
+### CPU vs GPU Comparison
+
+| Metric | CPU (Ryzen 3) | GPU (Tesla T4) | Improvement |
+|--------|--------------|----------------|-------------|
+| Latency (1 user) | 101,000ms | 2,100ms | **48x faster** |
+| Tokens/sec | 5 tok/s | 150 tok/s | **30x faster** |
+| Max concurrent users | 3 | 20 | **6.7x more** |
+| Success rate | 100% | 100% | Same |
+
+### Batching Benefit
+
+Token throughput improves with concurrent load due to dynamic batching:
+```
+1 user  →  102 tok/s
+5 users →  139 tok/s  (+36%)
+10 users→  147 tok/s  (+44%)
+20 users→  151 tok/s  (+48%)
 ```
 
 ---
 
 ## Features
 
-- **C++17 Runtime Core** — HTTP server, request queue, scheduler, batcher, KV cache all in C++17
-- **Thread-Safe Request Queue** — Producer-consumer pattern with mutex and condition variables
-- **Dynamic Batching** — Groups concurrent requests to maximize throughput
-- **LRU KV Cache** — Memory-efficient caching with configurable eviction policy
-- **Multi-Policy Scheduler** — FCFS, Priority, and Shortest-Job-First scheduling
-- **FastAPI Gateway** — Clean REST API layer on top of C++ runtime
-- **Live Dashboard** — Real-time monitoring of queue, throughput, latency, cache hit rate
+- **C++17 Runtime Core** — HTTP server, request queue, scheduler, batcher, KV cache
+- **Thread-Safe Request Queue** — Producer-consumer with mutex and condition variables
+- **Dynamic Batching** — Groups concurrent requests to maximize GPU throughput
+- **LRU KV Cache** — Memory-efficient caching with configurable eviction
+- **Multi-Policy Scheduler** — FCFS, Priority, Shortest-Job-First
+- **GPU Acceleration** — CUDA support via llama.cpp, tested on Tesla T4
+- **FastAPI Gateway** — Clean REST API layer
+- **Live Dashboard** — Real-time monitoring of queue, throughput, latency, cache
 - **Benchmark Suite** — Automated load testing with PNG graph generation
 
 ---
@@ -84,6 +119,7 @@ llama.cpp → Qwen2.5-1.5B-Instruct
                     ┌────────▼────────┐
                     │   llama.cpp     │
                     │ Qwen2.5-1.5B   │
+                    │  Tesla T4 GPU  │
                     └─────────────────┘
 ```
 
@@ -109,8 +145,9 @@ llama.cpp → Qwen2.5-1.5B-Instruct
 | Layer | Technology |
 |-------|-----------|
 | Core Runtime | C++17 |
-| Model Backend | llama.cpp |
+| Model Backend | llama.cpp (CUDA) |
 | Model | Qwen2.5-1.5B-Instruct (Q4_K_M GGUF) |
+| GPU | NVIDIA Tesla T4 (15GB) |
 | API Layer | Python + FastAPI |
 | Monitoring | Streamlit + Plotly |
 | Build System | CMake |
@@ -156,11 +193,11 @@ llm-runtime/
 ## Setup
 
 ### Prerequisites
-- Ubuntu 22.04 (or WSL2)
+- Ubuntu 22.04
 - GCC 11+
 - CMake 3.16+
 - Python 3.10+
-- 8GB RAM minimum
+- NVIDIA GPU with CUDA 12.0+ (optional, falls back to CPU)
 
 ### One Command Setup
 
@@ -171,35 +208,24 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-This automatically:
-- Installs system dependencies
-- Clones and builds llama.cpp
-- Sets up Python virtual environment
-- Downloads Qwen2.5-1.5B-Instruct model
-- Builds the C++ runtime
-
 ---
 
 ## Running
 
-Open 4 terminals:
-
 ```bash
-# Terminal 1 — C++ Runtime
 source venv/bin/activate
+
+# Terminal 1 — C++ Runtime
 ./build/llm_runtime
 
 # Terminal 2 — FastAPI Gateway
-source venv/bin/activate
 python api/main.py
 
 # Terminal 3 — Live Dashboard
-source venv/bin/activate
 streamlit run dashboard/app.py
 
 # Terminal 4 — Benchmark
-source venv/bin/activate
-python benchmark/load_test.py --users 1 2 3
+python benchmark/load_test.py --users 1 5 10 20
 ```
 
 ---
@@ -214,44 +240,19 @@ python benchmark/load_test.py --users 1 2 3
 | `/health` | GET | Health check |
 | `/reset` | POST | Reset runtime state |
 
-### Example
-
-```bash
-# Submit request
-curl -X POST http://localhost:8080/generate \
-  -H "Content-Type: application/json" \
-  -d '{"prompt": "What is machine learning?"}'
-
-# Get result
-curl http://localhost:8080/result/1
-```
-
 ---
 
-## Benchmark Results (CPU Baseline)
+## Comparison With Production Systems
 
-Tested on: AMD Ryzen 3, 8GB RAM, CPU-only inference
-
-| Users | RPS | P50 Latency | P95 Latency | Tokens/sec |
-|-------|-----|-------------|-------------|------------|
-| 1 | 0.007 | 136756ms | 136756ms | 0.18 |
-| 2 | 0.041 | 42220ms | 47437ms | 6.27 |
-| 3 | 0.043 | 69542ms | 69606ms | 5.27 |
-
-**Key finding:** Dynamic batching improved throughput by **5.7x** (0.007 → 0.041 req/s) when serving 2 concurrent users vs sequential processing.
-
----
-
-## Dashboard
-
-Live monitoring dashboard available at `http://localhost:8501`
-
-Shows real-time:
-- Request queue length
-- Throughput (req/s)
-- Average latency (ms)
-- KV Cache hit rate
-- Total requests processed
+| Feature | This Project | vLLM | TensorRT-LLM |
+|---------|-------------|------|--------------|
+| Request Queue | ✅ | ✅ | ✅ |
+| Dynamic Batching | ✅ | ✅ | ✅ |
+| KV Cache | ✅ | ✅ (Paged) | ✅ |
+| Scheduler | ✅ | ✅ | ✅ |
+| GPU Support | ✅ | ✅ | ✅ |
+| Streaming | 🔄 Soon | ✅ | ✅ |
+| Parallel Sequences | 🔄 Soon | ✅ | ✅ |
 
 ---
 
@@ -264,30 +265,27 @@ Shows real-time:
 - [x] Multi-policy scheduler
 - [x] Live monitoring dashboard
 - [x] Benchmark suite with graphs
-- [ ] GPU support (CUDA) — in progress
+- [x] GPU support (CUDA) on Tesla T4
+- [x] 20 concurrent user benchmark
 - [ ] Adaptive dynamic batching
 - [ ] Token streaming
-- [ ] Baseline vs batching comparison
-- [ ] 10-20 concurrent user benchmarks on GPU
+- [ ] True parallel multi-sequence inference
+- [ ] Baseline vs batching comparison graphs
 
 ---
 
-## Comparison With Production Systems
+## Hardware Tested
 
-| Feature | This Project | vLLM | TensorRT-LLM |
-|---------|-------------|------|--------------|
-| Request Queue | ✅ | ✅ | ✅ |
-| Dynamic Batching | ✅ | ✅ | ✅ |
-| KV Cache | ✅ | ✅ (Paged) | ✅ |
-| Scheduler | ✅ | ✅ | ✅ |
-| GPU Support | 🔄 Soon | ✅ | ✅ |
-| Streaming | 🔄 Soon | ✅ | ✅ |
+| Hardware | Latency | Tokens/sec |
+|----------|---------|------------|
+| AMD Ryzen 3, 8GB RAM (CPU) | 101,000ms | 5 |
+| NVIDIA Tesla T4 16GB (GPU) | 2,100ms | 150 |
 
 ---
 
 ## Author
 
-**Ved Parkash**
+**Soubhari Ved**
 M.Tech — Artificial Intelligence
 IIT Patna
 
