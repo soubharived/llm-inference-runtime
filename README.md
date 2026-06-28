@@ -285,7 +285,7 @@ python benchmark/load_test.py --users 1 5 10 20
 
 ## Author
 
-**Soubhari Ved**
+**Ved Parkash**
 M.Tech — Artificial Intelligence
 IIT Patna
 
