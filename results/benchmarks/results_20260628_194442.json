@@ -1,0 +1,290 @@
+[
+  {
+    "n_users": 1,
+    "total_time_s": 0.0,
+    "success_count": 0,
+    "fail_count": 1,
+    "throughput_rps": 0.0,
+    "latency_mean_ms": 0,
+    "latency_p50_ms": 0,
+    "latency_p95_ms": 0,
+    "latency_p99_ms": 0,
+    "latency_min_ms": 0,
+    "latency_max_ms": 0,
+    "avg_tokens": 0,
+    "total_tokens": 0,
+    "tokens_per_sec": 0.0,
+    "raw_results": [
+      {
+        "user_id": 1,
+        "success": false,
+        "latency_ms": 1.2476444244384766,
+        "error": "No request_id returned"
+      }
+    ]
+  },
+  {
+    "n_users": 5,
+    "total_time_s": 0.01,
+    "success_count": 0,
+    "fail_count": 5,
+    "throughput_rps": 0.0,
+    "latency_mean_ms": 0,
+    "latency_p50_ms": 0,
+    "latency_p95_ms": 0,
+    "latency_p99_ms": 0,
+    "latency_min_ms": 0,
+    "latency_max_ms": 0,
+    "avg_tokens": 0,
+    "total_tokens": 0,
+    "tokens_per_sec": 0.0,
+    "raw_results": [
+      {
+        "user_id": 1,
+        "success": false,
+        "latency_ms": 4.369020462036133,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 2,
+        "success": false,
+        "latency_ms": 3.9336681365966797,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 3,
+        "success": false,
+        "latency_ms": 3.679513931274414,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 4,
+        "success": false,
+        "latency_ms": 3.472566604614258,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 5,
+        "success": false,
+        "latency_ms": 3.2951831817626953,
+        "error": "No request_id returned"
+      }
+    ]
+  },
+  {
+    "n_users": 10,
+    "total_time_s": 0.0,
+    "success_count": 0,
+    "fail_count": 10,
+    "throughput_rps": 0.0,
+    "latency_mean_ms": 0,
+    "latency_p50_ms": 0,
+    "latency_p95_ms": 0,
+    "latency_p99_ms": 0,
+    "latency_min_ms": 0,
+    "latency_max_ms": 0,
+    "avg_tokens": 0,
+    "total_tokens": 0,
+    "tokens_per_sec": 0.0,
+    "raw_results": [
+      {
+        "user_id": 1,
+        "success": false,
+        "latency_ms": 2.595186233520508,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 2,
+        "success": false,
+        "latency_ms": 2.267599105834961,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 4,
+        "success": false,
+        "latency_ms": 2.0766258239746094,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 3,
+        "success": false,
+        "latency_ms": 2.2382736206054688,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 5,
+        "success": false,
+        "latency_ms": 2.0182132720947266,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 6,
+        "success": false,
+        "latency_ms": 1.9636154174804688,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 7,
+        "success": false,
+        "latency_ms": 1.9044876098632812,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 8,
+        "success": false,
+        "latency_ms": 1.8417835235595703,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 9,
+        "success": false,
+        "latency_ms": 1.901865005493164,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 10,
+        "success": false,
+        "latency_ms": 1.8572807312011719,
+        "error": "No request_id returned"
+      }
+    ]
+  },
+  {
+    "n_users": 20,
+    "total_time_s": 0.01,
+    "success_count": 0,
+    "fail_count": 20,
+    "throughput_rps": 0.0,
+    "latency_mean_ms": 0,
+    "latency_p50_ms": 0,
+    "latency_p95_ms": 0,
+    "latency_p99_ms": 0,
+    "latency_min_ms": 0,
+    "latency_max_ms": 0,
+    "avg_tokens": 0,
+    "total_tokens": 0,
+    "tokens_per_sec": 0.0,
+    "raw_results": [
+      {
+        "user_id": 1,
+        "success": false,
+        "latency_ms": 4.339933395385742,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 2,
+        "success": false,
+        "latency_ms": 3.998994827270508,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 3,
+        "success": false,
+        "latency_ms": 3.897428512573242,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 4,
+        "success": false,
+        "latency_ms": 3.8280487060546875,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 5,
+        "success": false,
+        "latency_ms": 3.7703514099121094,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 6,
+        "success": false,
+        "latency_ms": 3.7097930908203125,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 7,
+        "success": false,
+        "latency_ms": 3.6580562591552734,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 8,
+        "success": false,
+        "latency_ms": 3.598928451538086,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 9,
+        "success": false,
+        "latency_ms": 3.5486221313476562,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 10,
+        "success": false,
+        "latency_ms": 3.4966468811035156,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 11,
+        "success": false,
+        "latency_ms": 3.445148468017578,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 13,
+        "success": false,
+        "latency_ms": 3.2014846801757812,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 12,
+        "success": false,
+        "latency_ms": 3.4172534942626953,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 14,
+        "success": false,
+        "latency_ms": 3.1816959381103516,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 15,
+        "success": false,
+        "latency_ms": 3.135204315185547,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 16,
+        "success": false,
+        "latency_ms": 3.089427947998047,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 17,
+        "success": false,
+        "latency_ms": 3.0438899993896484,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 18,
+        "success": false,
+        "latency_ms": 2.9904842376708984,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 19,
+        "success": false,
+        "latency_ms": 2.936124801635742,
+        "error": "No request_id returned"
+      },
+      {
+        "user_id": 20,
+        "success": false,
+        "latency_ms": 3.0481815338134766,
+        "error": "No request_id returned"
+      }
+    ]
+  }
+]

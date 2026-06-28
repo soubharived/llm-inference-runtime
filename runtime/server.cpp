@@ -127,10 +127,32 @@ std::string parse_json_string(const std::string& json, const std::string& key)
 void handle_connection(int client_fd)
 {
     char buf[16384] = {};
-    int  n          = recv(client_fd, buf, sizeof(buf) - 1, 0);
-    if (n <= 0) { close(client_fd); return; }
+    int n = 0, total = 0;
+    // Read until we have full HTTP request including body
+    while (total < (int)sizeof(buf) - 1) {
+        n = recv(client_fd, buf + total, sizeof(buf) - 1 - total, 0);
+        if (n <= 0) break;
+        total += n;
+        buf[total] = 0;
+        // Check if we have complete request (headers + body)
+        std::string so_far(buf, total);
+        auto hend = so_far.find("\r\n\r\n");
+        if (hend == std::string::npos) continue;
+        // Check content-length
+        auto cl_pos = so_far.find("content-length: ");
+        if (cl_pos == std::string::npos)
+            cl_pos = so_far.find("Content-Length: ");
+        if (cl_pos != std::string::npos) {
+            int cl = std::stoi(so_far.substr(cl_pos + 16));
+            int body_received = total - (hend + 4);
+            if (body_received >= cl) break;
+        } else {
+            break;
+        }
+    }
+    if (total <= 0) { close(client_fd); return; }
 
-    std::string request(buf, n);
+    std::string request(buf, total);
     std::istringstream ss(request);
     std::string method, path;
     ss >> method >> path;

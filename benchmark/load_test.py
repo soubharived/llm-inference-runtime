@@ -40,15 +40,8 @@ SAMPLE_PROMPTS = [
 
 # ── Reset runtime between runs ───────────────────────────────────────
 async def reset_runtime(session: aiohttp.ClientSession):
-    try:
-        await session.post(
-            f"{CPP_RUNTIME_URL}/reset",
-            timeout=aiohttp.ClientTimeout(total=5)
-        )
-        print("[Reset] Runtime state cleared")
-        await asyncio.sleep(1)
-    except Exception as e:
-        print(f"[Reset] Warning: {e}")
+    print("[Reset] Skipped - tracking request IDs instead")
+    await asyncio.sleep(0.2)
 
 # ── Single user simulation ───────────────────────────────────────────
 async def single_user(session: aiohttp.ClientSession,
@@ -70,8 +63,9 @@ async def single_user(session: aiohttp.ClientSession,
             raise Exception("No request_id returned")
 
         # Step 2: Poll for result with correct timeout
+        await asyncio.sleep(0.5)  # small initial wait
         max_wait = 300  # 5 minutes max
-        poll_interval = 1.0
+        poll_interval = 0.5
         elapsed = 0
 
         while elapsed < max_wait:
@@ -84,7 +78,7 @@ async def single_user(session: aiohttp.ClientSession,
             ) as r:
                 result_data = await r.json()
 
-            if result_data.get("status") == "done":
+            if result_data.get("status") == "done" and result_data.get("tokens", 0) > 0:
                 latency = (time.time() - t0) * 1000
                 results.append({
                     "user_id":          user_id,
@@ -289,7 +283,7 @@ def generate_graphs(all_summaries: list, timestamp: str):
 async def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--users", nargs="+", type=int,
-                        default=[1, 2, 3],
+                        default=[1, 5, 10, 20],
                         help="List of concurrent user counts")
     args = parser.parse_args()
 

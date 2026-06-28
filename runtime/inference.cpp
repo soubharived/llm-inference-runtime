@@ -29,7 +29,7 @@ void InferenceEngine::load_model()
 
     // ── Load model ──────────────────────────────────────────────────
     llama_model_params mparams = llama_model_default_params();
-    mparams.n_gpu_layers       = 0;   // CPU only
+    mparams.n_gpu_layers       = 35;   // CPU only
 
     // Correct API name (verified from llama.cpp source 2025)
     
@@ -41,9 +41,10 @@ void InferenceEngine::load_model()
 
     // ── Create context ──────────────────────────────────────────────
     llama_context_params cparams = llama_context_default_params();
-    cparams.n_ctx       = config_.n_ctx;
     cparams.n_batch     = config_.n_batch;
     cparams.n_threads   = config_.n_threads;
+    cparams.n_seq_max   = 8;
+    cparams.n_ctx       = 4096;
     cparams.no_perf     = false;
 
 

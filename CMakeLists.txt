@@ -40,6 +40,12 @@ find_library(GGML_CPU_LIB
     REQUIRED
 )
 
+find_library(GGML_CUDA_LIB
+    NAMES ggml-cuda
+    PATHS "${LLAMA_BIN_DIR}"
+    NO_DEFAULT_PATH
+)
+
 message(STATUS "Found llama:     ${LLAMA_LIB}")
 message(STATUS "Found ggml:      ${GGML_LIB}")
 message(STATUS "Found ggml-base: ${GGML_BASE_LIB}")
@@ -66,6 +72,7 @@ target_link_libraries(llm_runtime PRIVATE
     ${GGML_LIB}
     ${GGML_BASE_LIB}
     ${GGML_CPU_LIB}
+    ${GGML_CUDA_LIB}
     pthread
 )
 

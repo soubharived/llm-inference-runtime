@@ -55,7 +55,7 @@ async def generate(req: GenerateRequest):
         request_id = submit.json()["request_id"]
 
         # Poll for result (max 120 seconds)
-        for _ in range(240):
+        for _ in range(600):
             await asyncio.sleep(0.5)
             result_r = await client.get(
                 f"{CPP_RUNTIME_URL}/result/{request_id}",

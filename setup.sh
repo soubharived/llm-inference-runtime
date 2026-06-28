@@ -1,5 +1,9 @@
 #!/bin/bash
 set -e
+export PATH="/home/ved_2511ai58/tools/cmake-4.1.1-linux-x86_64/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/home/ved_2511ai58/tools/cmake-4.1.1-linux-x86_64/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 echo "=========================================="
 echo "  LLM Inference Runtime - Setup Script"
@@ -7,20 +11,20 @@ echo "=========================================="
 
 # ── 1. System packages ──────────────────────────────────────────────
 echo "[1/7] Installing system packages..."
-sudo apt-get update -y
-sudo apt-get install -y \
-    build-essential \
-    cmake \
-    git \
-    curl \
-    wget \
-    python3 \
-    python3-pip \
-    python3-venv \
-    pkg-config \
-    htop \
-    screen \
-    ninja-build
+echo "[Skip] No sudo - packages already installed"
+##sudo apt-get install -y \
+##    build-essential \
+##    cmake \
+##    git \
+##    curl \
+##    wget \
+##    python3 \
+##    python3-pip \
+##    python3-venv \
+##    pkg-config \
+##    htop \
+##    screen \
+##    ninja-build
 
 # ── 2. Clone and build llama.cpp ────────────────────────────────────
 echo "[2/7] Cloning llama.cpp..."
@@ -38,6 +42,7 @@ cmake -B build \
     -DBUILD_SHARED_LIBS=ON \
     -DLLAMA_BUILD_TESTS=OFF \
     -DLLAMA_BUILD_EXAMPLES=OFF \
+    -DGGML_CUDA=ON \
     -G Ninja
 
 cmake --build build --config Release -j$(nproc)
@@ -89,7 +94,8 @@ mkdir -p build
 cd build
 cmake .. \
     -DCMAKE_BUILD_TYPE=Release \
-    -DGGML_NATIVE=OFF
+    -DGGML_NATIVE=OFF \
+    -DGGML_CUDA=ON
 cmake --build . -j$(nproc)
 cd ..
 
